@@ -82,7 +82,7 @@ plot(temp.max, col=terrain.colors(24), main = "Mean annual Maximum Temperature",
 par(mfrow=c(2,2))
 plot(temp.max, col=terrain.colors(12), main = "Mean annual Maximum Temperature", 
      xlab = "Longitude", ylab = "Latitude")
-plot(temp.max, col=terrain.colors(12), main = "Mean annual Maximum Temperature", 
+plot(temp.min, col=terrain.colors(12), main = "Mean annual Minimum Temperature", 
      xlab = "Longitude", ylab = "Latitude")
 plot(elev, col=terrain.colors(12), main = "Altitude", 
      xlab = "Longitude", ylab = "Latitude")
