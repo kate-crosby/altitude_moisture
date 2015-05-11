@@ -101,4 +101,43 @@ ggplot(data=temp.max, aes(y=Latitude, x=Longitude)) +
         legend.key = element_blank()
   )
 
+# Adding in altitude - note, you may want to add more countries here to stitch together 
+# getData('iso3') to get the three letter codes
+# Because this raster is from a DEM - you're probably going to want to run it on FARM or another cluster
+# I think it is 50 million or so rows once you make the data.frame, i.e. large for local.
+
+elev1 = getData('alt', country = 'BRA', mask = FALSE)
+elev2 = getData('alt', country = 'PER', mask = FALSE)
+elev3 = getData('alt', country = 'MEX', mask = FALSE)
+elev4 = getData('alt', country = 'COL', mask = FALSE)
+elev5 = getData('alt', country = 'HND', mask = FALSE)
+elev6 = getData('alt', country = 'PAN', mask = FALSE)
+elev7 = getData('alt', country = 'VEN', mask = FALSE)
+elev8 = getData('alt', country = 'CRI', mask = FALSE)
+elev9 = getData('alt', country = 'SLV', mask = FALSE)
+elev10 = getData('alt', country = 'GTM', mask = FALSE)
+elev11 = getData('alt', country = 'NIC', mask = FALSE)
+elev12 = getData('alt', country = 'USA', mask = FALSE)
+
+elev = merge(elev1,elev2, elev3, elev4, elev5, elev6, elev7, elev8,
+             elev9, elev10, elev11, elev12)
+elev <- crop(elev, Zea_Range)
+
+elev <- as.data.frame(elev, xy=TRUE)
+
+colnames(elev) <- c('Longitude', 'Latitude', 'MAP')
+
+
+ggplot(data=elev, aes(y=Latitude, x=Longitude)) +
+  geom_raster(aes(fill=MAP)) +
+  theme_bw() + scale_fill_gradient('Elevation (m)', low="blue", high="orange", space="Lab") +
+  theme(axis.title.x = element_text(size=16),
+        axis.title.y = element_text(size=16, angle=90),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = 'right',
+        legend.key = element_blank()
+  )
 
